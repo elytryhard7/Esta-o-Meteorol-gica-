@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Estação Meteorológica - Malanje</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<body>
+
+<header>
+
+<h1>🌍 Estação Meteorológica IoT</h1>
+
+<h2>📍 Malanje | <span id="dataHora"></span></h2>
+
+</header>
+
+<section class="card destaque">
+
+<div class="temp-box">
+
+<span id="emojiClima">☀️</span>
+
+<h3 id="temperatura">--°C</h3>
+
+</div>
+
+<div>
+
+<p id="estadoTempo">Carregando...</p>
+
+<p id="sensacao"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>📘 Dica do Dia</h3>
+
+<h4 id="dicaTitulo"></h4>
+
+<p id="dicaTexto"></p>
+
+</section>
+
+<section class="card">
+
+<h3></h3>
+
+<div class="linha"><span>💨 Vento</span><span id="vento"></span></div>
+
+<div class="linha"><span>💧 Humidade</span><span id="humidade"></span></div>
+
+<div class="linha"><span>🌧️ Chuva</span><span id="chuva"></span></div>
+
+<div class="linha"><span>📊 Pressão</span><span id="pressao"></span></div>
+
+<div class="linha"><span>💡 Luz</span><span id="LDR"></span></div>
+
+</section>
+
+<section class="card">
+
+<div class="linha"><span>🌄 Nascer do Sol</span><span id="nascer"></span></div>
+
+<div class="linha"><span>🌇 Pôr-do-Sol</span><span id="por"></span></div>
+
+</section>
+
+<section class="card">
+
+<div class="linha"><span>🚗 Dificuldade de Condução</span><span id="conducao"></span></div>
+
+<div class="linha"><span>🏃 Caminhada</span><span id="caminhada"></span></div>
+
+</section>
+
+<section class="card">
+
+<h3>🗺️ Mapa Meteorológico</h3>
+
+<div id="map"></div>
+
+</section>
+
+<section class="card">
+
+<h3>📈 Histórico (Últimas 24h)</h3>
+
+<canvas id="grafTemp"></canvas>
+
+<canvas id="grafHum"></canvas>
+
+<canvas id="grafPress"></canvas>
+
+</section>
+
+<section class="card">
+
+<h3>📅 Previsão Semanal</h3>
+
+<div id="previsaoSemanal"></div>
+
+</section>
+
+<script src="script.js"></script>
+
+<!-- ================= FEEDBACK ================= -->
+
+<section class="feedback-section reveal">
+
+    <h2>📩 Envie seu Feedback</h2>
+
+    <form action="mailto:SEUEMAIL@hotmail.com" method="POST" enctype="text/plain">
+
+        
+
+        <input type="text" name="nome" placeholder="Seu nome" required>
+
+        <input type="email" name="email" placeholder="Seu email" required>
+
+        <textarea name="mensagem" rows="5" placeholder="Escreva seu comentário..." required></textarea>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+</section>
+
+<!-- ================= CRÉDITOS ================= -->
+
+<footer class="credits reveal">
+
+    <p>© 2026 Estação Meteorológica Iot - Todos os direitos reservados.</p>
+
+    <div class="creator">
+
+        <h3>Criadores</h3>
+
+        <div class="social-links">
+
+            <a href="https://instagram.com/seuusuario" target="_blank">
+
+                <i class="fa-brands fa-instagram"></i> @seuusuario
+
+            </a>
+
+            <a href="https://reddit.com/u/seuusuario" target="_blank">
+
+                <i class="fa-brands fa-reddit"></i> u/seuusuario
+
+            </a>
+
+            <a href="https://linkedin.com/in/seuusuario" target="_blank">
+
+                <i class="fa-brands fa-linkedin"></i> seuusuario
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="supporters">
+
+        <h3>Co-Devs</h3>
+
+        <p>Armando Dionisio</p>
+
+        <p>Nome do Apoiador 2</p>
+
+        <p>Nome do Apoiador 3</p>
+
+    </div>
+
+</footer>
+
+</body>
+
+</html>
