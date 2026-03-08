@@ -342,6 +342,8 @@ const min = Math.min(...dias[dia].temps);
 data.list.forEach(item=>{
 if(item.dt_txt.includes("12:00:00")){
 
+const icone = dias[dia].icons[4] || dias[dia].icons[0];
+
 const nomeDia = new Date(dia).toLocaleDateString("pt-PT",{weekday:"long"});
 
 container.innerHTML += `
