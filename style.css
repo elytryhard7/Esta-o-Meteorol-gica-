@@ -283,3 +283,37 @@ opacity:0.9;
 margin-bottom:15px;
 
 }
+
+/* ===== TIMELINE MAPA ===== */
+
+.timeline{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.7);
+padding:10px 20px;
+border-radius:12px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.timeline input{
+width:200px;
+}
+
+.legenda{
+background:rgba(0,0,0,0.7);
+padding:10px;
+border-radius:10px;
+font-size:14px;
+line-height:1.6;
+}
+
+.legenda i{
+width:18px;
+height:10px;
+display:inline-block;
+margin-right:6px;
+}
