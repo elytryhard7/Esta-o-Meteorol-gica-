@@ -226,19 +226,25 @@ new Date(d.results.sunset).toLocaleTimeString();
 
 const map = L.map('map').setView([lat,lon],7);
 
-const base = L.tileLayer(
-'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-);
+const base = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+ attribution: '&copy; OpenStreetMap & Carto',
+ subdomains: 'abcd',
+ maxZoom: 19
+}).addTo(map);
 
 const nuvens = L.tileLayer(
 `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
-{opacity:0.6}
-);
+{
+opacity:0.75
+}
+).addTo(map);
 
 const chuva = L.tileLayer(
 `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
-{opacity:0.8}
-);
+{
+opacity:0.85
+}
+).addTo(map);
 
 base.addTo(map);
 nuvens.addTo(map);
