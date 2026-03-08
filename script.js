@@ -224,19 +224,32 @@ new Date(d.results.sunset).toLocaleTimeString();
 
 // ===== MAPA OPENWEATHER =====
 
-const map=L.map('map').setView([lat,lon],8);
+const map = L.map('map').setView([lat,lon],7);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+const base = L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+);
 
-.addTo(map);
+const nuvens = L.tileLayer(
+`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
+{opacity:0.6}
+);
 
-L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`)
+const chuva = L.tileLayer(
+`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
+{opacity:0.8}
+);
 
-.addTo(map);
+base.addTo(map);
+nuvens.addTo(map);
+chuva.addTo(map);
 
-L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`)
-
-.addTo(map);
+L.control.layers({
+"Mapa": base
+},{
+"Nuvens": nuvens,
+"Chuva": chuva
+}).addTo(map);
 
 // ===== ATUALIZAÇÃO 4H =====
 
@@ -399,3 +412,31 @@ document.getElementById("dicaTexto").innerText = dica.texto;
 // chamar depois de calcular clima
 
 setTimeout(carregarDica,2000);
+
+
+var legenda = L.control({position:"bottomright"});
+
+legenda.onAdd = function () {
+
+var div = L.DomUtil.create("div","legenda");
+
+div.innerHTML += "<b>Chuva</b><br>";
+div.innerHTML += "<i style='background:#87CEFA'></i> Fraca<br>";
+div.innerHTML += "<i style='background:#00FF00'></i> Moderada<br>";
+div.innerHTML += "<i style='background:#FFD700'></i> Forte<br>";
+div.innerHTML += "<i style='background:#FF0000'></i> Muito forte<br>";
+
+return div;
+
+};
+
+legenda.addTo(map);
+
+const tempo = document.getElementById("tempo");
+const hora = document.getElementById("hora");
+
+tempo.addEventListener("input", function(){
+
+hora.textContent = tempo.value + "h";
+
+});
