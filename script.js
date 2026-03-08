@@ -339,7 +339,8 @@ const max = Math.max(...dias[dia].temps);
 
 const min = Math.min(...dias[dia].temps);
 
-const icone = dias[dia].icons[4] || dias[dia].icons[0];
+data.list.forEach(item=>{
+if(item.dt_txt.includes("12:00:00")){
 
 const nomeDia = new Date(dia).toLocaleDateString("pt-PT",{weekday:"long"});
 
