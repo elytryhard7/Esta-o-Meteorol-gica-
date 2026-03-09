@@ -295,75 +295,57 @@ revealOnScroll();
 
 // ===== PREVISÃO 7 DIAS OPENWEATHER =====
 
-fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherKey}&units=metric&lang=pt`)
-
-.then(res=>res.json())
-
-.then(data=>{
-
 const dias = {};
 
-data.list.forEach(item=>{
+data.list.forEach(item => {
 
-const dataDia = item.dt_txt.split(" ")[0];
+    const dia = item.dt_txt.split(" ")[0];
 
-if(!dias[dataDia]){
+    if(!dias[dia]){
+        dias[dia] = {
+            temps: [],
+            icons: []
+        };
+    }
 
-dias[dataDia] = {
-
-temps: [],
-
-icons: [],
-
-};
-
-}
-
-dias[dataDia].temps.push(item.main.temp);
-
-dias[dataDia].icons.push(item.weather[0].icon);
+    dias[dia].temps.push(item.main.temp);
+    dias[dia].icons.push(item.weather[0].icon);
 
 });
 
-const container = document.getElementById("previsaoSemanal");
+const weekly = document.querySelector(".weekly");
+weekly.innerHTML = "";
 
-container.innerHTML="";
+Object.keys(dias).slice(0,5).forEach(dia => {
 
-let contador=0;
+    const temps = dias[dia].temps;
 
-for(const dia in dias){
+    const max = Math.round(Math.max(...temps));
+    const min = Math.round(Math.min(...temps));
 
-if(contador>=7) break;
+    let icon = dias[dia].icons[0];
 
-const max = Math.max(...dias[dia].temps);
+    const rain = dias[dia].icons.find(i =>
+        i.startsWith("09") ||
+        i.startsWith("10") ||
+        i.startsWith("11")
+    );
 
-const min = Math.min(...dias[dia].temps);
+    if(rain) icon = rain;
 
-const icone = dias[dia].icons[4] || dias[dia].icons[0];
+    const dataObj = new Date(dia);
 
-const nomeDia = new Date(dia).toLocaleDateString("pt-PT",{weekday:"long"});
+    const nomeDia = dataObj.toLocaleDateString("pt-PT", {
+        weekday: "short"
+    });
 
-container.innerHTML += `
-
-<div class="dia-previsao">
-
-<span>${contador==0?"Hoje":nomeDia}</span>
-
-<span>
-
-<img src="https://openweathermap.org/img/wn/${icone}.png">
-
-</span>
-
-<span>${max.toFixed(0)}° / ${min.toFixed(0)}°</span>
-
-</div>
-
-`;
-
-contador++;
-
-}
+    weekly.innerHTML += `
+        <div class="dia">
+            <p>${nomeDia}</p>
+            <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
+            <p>${max}° / ${min}°</p>
+        </div>
+    `;
 
 });
 
