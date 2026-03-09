@@ -367,6 +367,7 @@ contador++;
 
 });
 
+
 function carregarDica(){
 
 fetch("dicas.json")
