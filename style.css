@@ -4,7 +4,7 @@ background:#000;
 
 color:#fff;
 
-font-family:Arial
+font-family:'Segoe UI', sans-serif;
 
 margin:0;
 
@@ -281,25 +281,4 @@ text-shadow:
 0 0 10px #00c6ff,
 0 0 20px #00c6ff,
 0 0 40px #0072ff;
-
-animation: brilho 2s infinite alternate;
-}
-
-@keyframes brilho{
-
-from{
-text-shadow:
-0 0 5px #00c6ff,
-0 0 10px #00c6ff,
-0 0 20px #00c6ff;
-}
-
-to{
-text-shadow:
-0 0 10px #00c6ff,
-0 0 20px #00c6ff,
-0 0 40px #0072ff,
-0 0 60px #0072ff;
-}
-
 }
