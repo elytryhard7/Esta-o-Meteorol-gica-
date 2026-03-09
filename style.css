@@ -4,7 +4,7 @@ background:#000;
 
 color:#fff;
 
-font-family:font-family: 'Segoe UI', sans-serif;
+font-family:Arial
 
 margin:0;
 
@@ -14,10 +14,6 @@ header{
 
 text-align:center;
 
-h1{
-  margin-bottom 5px;
-  text-shadow: 0 0 10px #00ffcc;
-}
 
 padding:20px;
 
@@ -274,4 +270,36 @@ width:18px;
 height:10px;
 display:inline-block;
 margin-right:6px;
+}
+
+header h1{
+font-size:40px;
+color:#8fdcff;
+
+text-shadow:
+0 0 5px #00c6ff,
+0 0 10px #00c6ff,
+0 0 20px #00c6ff,
+0 0 40px #0072ff;
+
+animation: brilho 2s infinite alternate;
+}
+
+@keyframes brilho{
+
+from{
+text-shadow:
+0 0 5px #00c6ff,
+0 0 10px #00c6ff,
+0 0 20px #00c6ff;
+}
+
+to{
+text-shadow:
+0 0 10px #00c6ff,
+0 0 20px #00c6ff,
+0 0 40px #0072ff,
+0 0 60px #0072ff;
+}
+
 }
