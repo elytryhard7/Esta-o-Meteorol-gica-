@@ -180,30 +180,38 @@ margin-top:20px;
 
 #previsaoSemanal{
 
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
+    margin-bottom:20px;
 }
 
-.dia-previsao{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:10px;
-
-background:#1a1a1a;
-
-border-radius:15px;
-
+.weekly{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
+.dia{
+    background:#162b3c;
+    padding:15px;
+    border-radius:12px;
+    width:100px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+}
+
+.dia:hover{
+    transform: scale(1.05);
+}
+
+.dia p{
+    margin:5px 0;
+    font-weight:bold;
+}
+
+.dia img{
+    width:50px;
+    height:50px;
+}
 .dia-previsao span{
 
 font-size:18px;
