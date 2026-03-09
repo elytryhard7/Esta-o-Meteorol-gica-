@@ -295,8 +295,11 @@ revealOnScroll();
 
 // ===== PREVISÃO 7 DIAS OPENWEATHER =====
 
+const apiKey = "241fc91487eab06c609738e55f29afa4";
+const cidade = "Malanje";
+
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt`)
-.then(response => response.json())
+.then(res => res.json())
 .then(data => {
 
 const dias = {};
@@ -318,7 +321,6 @@ data.list.forEach(item => {
 });
 
 const weekly = document.querySelector(".weekly");
-weekly.innerHTML = "";
 
 Object.keys(dias).slice(0,5).forEach(dia => {
 
@@ -340,7 +342,7 @@ Object.keys(dias).slice(0,5).forEach(dia => {
     const dataObj = new Date(dia);
 
     const nomeDia = dataObj.toLocaleDateString("pt-PT", {
-        weekday: "short"
+        weekday:"short"
     });
 
     weekly.innerHTML += `
@@ -353,6 +355,7 @@ Object.keys(dias).slice(0,5).forEach(dia => {
 
 });
 
+});
 
 function carregarDica(){
 
