@@ -298,62 +298,67 @@ revealOnScroll();
 const apiKey = "241fc91487eab06c609738e55f29afa4";
 const cidade = "Malanje";
 
+// Chamada à API
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt`)
 .then(res => res.json())
 .then(data => {
 
-const dias = {};
+    const dias = {};
 
-data.list.forEach(item => {
+    // Agrupa os dados por dia
+    data.list.forEach(item => {
 
-    const dia = item.dt_txt.split(" ")[0];
+        const dia = item.dt_txt.split(" ")[0];
 
-    if(!dias[dia]){
-        dias[dia] = {
-            temps: [],
-            icons: []
-        };
-    }
+        if(!dias[dia]){
+            dias[dia] = {
+                temps: [],
+                icons: []
+            };
+        }
 
-    dias[dia].temps.push(item.main.temp);
-    dias[dia].icons.push(item.weather[0].icon);
+        dias[dia].temps.push(item.main.temp);
+        dias[dia].icons.push(item.weather[0].icon);
 
-});
-
-const weekly = document.querySelector(".weekly");
-
-Object.keys(dias).slice(0,5).forEach(dia => {
-
-    const temps = dias[dia].temps;
-
-    const max = Math.round(Math.max(...temps));
-    const min = Math.round(Math.min(...temps));
-
-    let icon = dias[dia].icons[0];
-
-    const rain = dias[dia].icons.find(i =>
-        i.startsWith("09") ||
-        i.startsWith("10") ||
-        i.startsWith("11")
-    );
-
-    if(rain) icon = rain;
-
-    const dataObj = new Date(dia);
-
-    const nomeDia = dataObj.toLocaleDateString("pt-PT", {
-        weekday:"short"
     });
 
-    weekly.innerHTML += `
-        <div class="dia">
-            <p>${nomeDia}</p>
-            <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
-            <p>${max}° / ${min}°</p>
-        </div>
-    `;
+    const weekly = document.querySelector(".weekly");
+    weekly.innerHTML = "";
 
-});
+    // Pega os próximos 5 dias
+    Object.keys(dias).slice(0,5).forEach(dia => {
+
+        const temps = dias[dia].temps;
+
+        const tempMax = Math.round(Math.max(...temps));
+        const tempMin = Math.round(Math.min(...temps));
+
+        // Chuva tem prioridade
+        let icon = dias[dia].icons[0];
+        const rain = dias[dia].icons.find(i =>
+            i.startsWith("09") || // chuva leve
+            i.startsWith("10") || // chuva intensa
+            i.startsWith("11")    // trovoada
+        );
+        if(rain) icon = rain;
+
+        const dataObj = new Date(dia);
+
+        // Dias abreviados: Seg., Ter., Qua.
+        const nomeDia = dataObj.toLocaleDateString("pt-PT", {
+            weekday:"short"
+        }).replace(".", "") + ".";
+
+        // Adiciona o card do dia
+        weekly.innerHTML += `
+            <div class="dia">
+                <p>${nomeDia}</p>
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Ícone do dia">
+                <p>${tempMax}° / ${tempMin}°</p>
+            </div>
+        `;
+
+    });
 
 });
 
