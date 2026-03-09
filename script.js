@@ -295,6 +295,10 @@ revealOnScroll();
 
 // ===== PREVISÃO 7 DIAS OPENWEATHER =====
 
+fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt`)
+.then(response => response.json())
+.then(data => {
+
 const dias = {};
 
 data.list.forEach(item => {
