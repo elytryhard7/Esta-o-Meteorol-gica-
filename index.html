@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="pt">
 
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Estação Meteorológica - Malanje</title>
@@ -11,24 +13,23 @@
 <link rel="stylesheet" href="style.css">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <body>
 
 <header>
 
-<h1>Estação Meteorológica IoT</h1>
-
+<h1> Estação Meteorológica IoT</h1>
 <p class="subtitle">Monitoramento em tempo Real via ESP32</p>
 
 <p class="subtitle">Malanje</p>
-
 <p class="subtitle"><span id="dataHora"></span></p>
 
 </header>
@@ -36,13 +37,19 @@
 <section class="card destaque">
 
 <div class="temp-box">
+
 <span id="emojiClima">☀️</span>
+
 <h3 id="temperatura">--°C</h3>
+
 </div>
 
 <div>
+
 <p id="estadoTempo">Carregando...</p>
+
 <p id="sensacao"></p>
+
 </div>
 
 </section>
@@ -52,11 +59,14 @@
 <h3>📘 Dica do Dia</h3>
 
 <h4 id="dicaTitulo"></h4>
+
 <p id="dicaTexto"></p>
 
 </section>
 
 <section class="card">
+
+<h3></h3>
 
 <div class="linha"><span>💨 Vento</span><span id="vento"></span></div>
 
@@ -86,11 +96,13 @@
 
 </section>
 
+
 <section class="card">
 
 <h3>🗺️ Mapa Meteorológico</h3>
 
 <div id="map"></div>
+
 
 </section>
 
@@ -106,33 +118,38 @@
 
 </section>
 
-<!-- FEEDBACK -->
+
+<!-- ================= FEEDBACK ================= -->
 
 <section class="feedback-section reveal">
 
-<h2>📩 Envie seu Feedback</h2>
+    <h2>📩 Envie seu Feedback</h2>
 
-<form action="mailto:SEUEMAIL@hotmail.com" method="POST" enctype="text/plain">
+    <form action="mailto:SEUEMAIL@hotmail.com" method="POST" enctype="text/plain">
 
-<input type="text" name="nome" placeholder="Seu nome" required>
+        
 
-<input type="email" name="email" placeholder="Seu email" required>
+        <input type="text" name="nome" placeholder="Seu nome" required>
 
-<textarea name="mensagem" rows="5" placeholder="Escreva seu comentário..." required></textarea>
+        <input type="email" name="email" placeholder="Seu email" required>
 
-<button type="submit">Enviar</button>
+        <textarea name="mensagem" rows="5" placeholder="Escreva seu comentário..." required></textarea>
 
-</form>
+        <button type="submit">Enviar</button>
+
+    </form>
 
 </section>
 
+<!-- ================= CRÉDITOS ================= -->
+
 <footer class="credits reveal">
 
-<p>© 2026 Estação Meteorológica IoT - Todos os direitos reservados.</p>
+    <p>© 2026 Estação Meteorológica Iot - Todos os direitos reservados.</p>
+
+    
 
 </footer>
-
-<script src="script.js"></script>
 
 </body>
 
