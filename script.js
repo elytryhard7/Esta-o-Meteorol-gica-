@@ -247,7 +247,6 @@ opacity:0.85
 ).addTo(map);
 
 
-
 // ===== ATUALIZAÇÃO 4H =====
 
 setInterval(()=>{
