@@ -293,25 +293,18 @@ text-shadow:
 0 0 80px #009944;
 }
 
-.local-info{
-position:absolute;
-top:20px;
-left:20px;
-font-size:18px;
-color:#ddd;
+.localizacao{
+margin:20px 20px 5px 20px;
 }
 
-.local-info i{
-margin-right:6px;
-}
-
-.local-info .cidade{
-font-size:22px;
+.cidade{
+font-size:26px;
 font-weight:bold;
-color:#fff;
+color:white;
 }
 
-.local-info #dataHora{
-font-size:14px;
+.datahora{
+font-size:16px;
 color:#aaa;
+margin-top:4px;
 }
