@@ -16,18 +16,15 @@ text-align:center;
 
 padding:20px;
 
+
 }
 
 .card{
-
 background:#111;
-
 margin:15px;
-
 padding:20px;
-
 border-radius:20px;
-
+position:relative;
 }
 
 .destaque{
@@ -294,4 +291,27 @@ text-shadow:
 0 0 20px #00ff88,
 0 0 40px #00cc66,
 0 0 80px #009944;
+}
+
+.local-info{
+position:absolute;
+top:20px;
+left:20px;
+font-size:18px;
+color:#ddd;
+}
+
+.local-info i{
+margin-right:6px;
+}
+
+.local-info .cidade{
+font-size:22px;
+font-weight:bold;
+color:#fff;
+}
+
+.local-info #dataHora{
+font-size:14px;
+color:#aaa;
 }
