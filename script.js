@@ -226,17 +226,26 @@ new Date(d.results.sunset).toLocaleTimeString();
 
 const map=L.map('map').setView([lat,lon],8);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+ attribution: '&copy; OpenStreetMap & Carto',
+ subdomains: 'abcd',
+ maxZoom: 19
+}).addTo(map);
 
-.addTo(map);
+L.tileLayer(
+`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
+{
+opacity:0.75
+}
+).addTo(map);
 
-L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`)
+L.tileLayer(
+`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
+{
+opacity:0.85
+}
+).addTo(map);
 
-.addTo(map);
-
-L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`)
-
-.addTo(map);
 
 // ===== ATUALIZAÇÃO 4H =====
 
@@ -399,3 +408,21 @@ document.getElementById("dicaTexto").innerText = dica.texto;
 // chamar depois de calcular clima
 
 setTimeout(carregarDica,2000);
+
+var legenda = L.control({position:"bottomright"});
+
+legenda.onAdd = function () {
+
+var div = L.DomUtil.create("div","legenda");
+
+div.innerHTML += "<b>Chuva</b><br>";
+div.innerHTML += "<i style='background:#87CEFA'></i> Fraca<br>";
+div.innerHTML += "<i style='background:#00FF00'></i> Moderada<br>";
+div.innerHTML += "<i style='background:#FFD700'></i> Forte<br>";
+div.innerHTML += "<i style='background:#FF0000'></i> Muito forte<br>";
+
+return div;
+
+};
+
+legenda.addTo(map);
