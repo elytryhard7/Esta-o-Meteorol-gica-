@@ -246,6 +246,12 @@ opacity:0.85
 }
 ).addTo(map);
 
+L.control.layers(
+{ "Mapa": base },
+{ "Nuvens": nuvens, "Chuva": chuva }
+).addTo(map);
+
+
 
 // ===== ATUALIZAÇÃO 4H =====
 
