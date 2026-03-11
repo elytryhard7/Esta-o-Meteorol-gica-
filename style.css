@@ -293,14 +293,17 @@ text-shadow:
 0 0 80px #009944;
 }
 
-.localizacao{
-margin:20px 20px 5px 20px;
+.top-info{
+margin-left:20px;
+margin-top:10px;
+margin-bottom:10px;
+text-align:left;
 }
 
 .cidade{
 font-size:26px;
 font-weight:bold;
-color:white;
+color:#fff;
 }
 
 .datahora{
