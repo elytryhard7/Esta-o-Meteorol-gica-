@@ -409,6 +409,13 @@ document.getElementById("dicaTexto").innerText = dica.texto;
 
 setTimeout(carregarDica,2000);
 
+L.control.layers({
+"Mapa": base
+},{
+"Nuvens": nuvens,
+"Chuva": chuva
+}).addTo(map);
+
 var legenda = L.control({position:"bottomright"});
 
 legenda.onAdd = function () {
