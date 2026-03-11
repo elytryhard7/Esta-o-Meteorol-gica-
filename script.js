@@ -2,9 +2,20 @@
 
 setInterval(()=>{
 
-document.getElementById("dataHora").innerText =
+const agora = new Date();
 
-new Date().toLocaleString("pt-PT");
+const dias = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
+const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+
+const dia = dias[agora.getDay()];
+const data = agora.getDate();
+const mes = meses[agora.getMonth()];
+
+const hora = agora.getHours().toString().padStart(2,"0");
+const minuto = agora.getMinutes().toString().padStart(2,"0");
+
+document.getElementById("dataHora").innerText =
+`${dia} • ${data} ${mes} • ${hora}:${minuto}`;
 
 },1000);
 
