@@ -296,75 +296,85 @@ revealOnScroll();
 
 // ===== PREVISÃO 7 DIAS OPENWEATHER =====
 
-fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherKey}&units=metric&lang=pt`)
+const apiKey = "241fc91487eab06c609738e55f29afa4";
+const cidade = "Malanje";
 
-.then(res=>res.json())
-
-.then(data=>{
+fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt`)
+.then(res => res.json())
+.then(data => {
 
 const dias = {};
 
-data.list.forEach(item=>{
+data.list.forEach(item => {
 
-const dataDia = item.dt_txt.split(" ")[0];
+    const dia = item.dt_txt.split(" ")[0];
 
-if(!dias[dataDia]){
+    if(!dias[dia]){
+        dias[dia] = {
+            temps: [],
+            weather: []
+        };
+    }
 
-dias[dataDia] = {
-
-temps: [],
-
-icons: [],
-
-};
-
-}
-
-dias[dataDia].temps.push(item.main.temp);
-
-dias[dataDia].icons.push(item.weather[0].icon);
+    dias[dia].temps.push(item.main.temp);
+    dias[dia].weather.push(item.weather[0].id);
 
 });
 
-const container = document.getElementById("previsaoSemanal");
+const container = document.getElementById("weeklyForecast");
+container.innerHTML = "";
 
-container.innerHTML="";
+Object.keys(dias).slice(0,6).forEach((dia,index)=>{
 
-let contador=0;
+    const temps = dias[dia].temps;
 
-for(const dia in dias){
+    const max = Math.round(Math.max(...temps));
+    const min = Math.round(Math.min(...temps));
 
-if(contador>=7) break;
+    const codigos = dias[dia].weather;
 
-const max = Math.max(...dias[dia].temps);
+    let iconeDia="🌤";
+    let iconeNoite="🌙";
 
-const min = Math.min(...dias[dia].temps);
+    // PRIORIDADE DE CLIMA
+    if(codigos.some(c=>c>=200 && c<300)){
+        iconeDia="⛈️";
+        iconeNoite="⛈️";
+    }
+    else if(codigos.some(c=>c>=500 && c<600)){
+        iconeDia="🌧";
+        iconeNoite="🌧";
+    }
+    else if(codigos.some(c=>c>=801 && c<=804)){
+        iconeDia="☁️";
+        iconeNoite="☁️";
+    }
 
-const icone = dias[dia].icons[4] || dias[dia].icons[0];
+    const dataObj = new Date(dia);
 
-const nomeDia = new Date(dia).toLocaleDateString("pt-PT",{weekday:"long"});
+    let nomeDia = dataObj.toLocaleDateString("pt-PT",{weekday:"long"});
 
-container.innerHTML += `
+    if(index===0) nomeDia="Hoje";
 
-<div class="dia-previsao">
+    container.innerHTML+=`
 
-<span>${contador==0?"Hoje":nomeDia}</span>
+    <div class="linha-dia">
 
-<span>
+        <div class="nome-dia">${nomeDia}</div>
 
-<img src="https://openweathermap.org/img/wn/${icone}.png">
+        <div class="icones">
+        ${iconeDia} ${iconeNoite}
+        </div>
 
-</span>
+        <div class="temperatura">
+        ${max}° / ${min}°
+        </div>
 
-<span>${max.toFixed(0)}° / ${min.toFixed(0)}°</span>
+    </div>
 
-</div>
+    `;
 
-`;
-
-contador++;
-
-}
+});
 
 });
 
