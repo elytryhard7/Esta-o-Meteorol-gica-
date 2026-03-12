@@ -299,80 +299,55 @@ revealOnScroll();
 const apiKey = "241fc91487eab06c609738e55f29afa4";
 const cidade = "Malanje";
 
-fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt`)
+fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherKey}&units=metric&lang=pt`)
 .then(res => res.json())
 .then(data => {
 
 const dias = {};
-
 data.list.forEach(item => {
 
-    const dia = item.dt_txt.split(" ")[0];
+const dataDia = item.dt_txt.split(" ")[0];
 
-    if(!dias[dia]){
-        dias[dia] = {
-            temps: [],
-            weather: []
-        };
-    }
+if(!dias[dataDia]){
+dias[dataDia] = [];
+}
 
-    dias[dia].temps.push(item.main.temp);
-    dias[dia].weather.push(item.weather[0].id);
+dias[dataDia].push(item);
 
 });
 
-const container = document.getElementById("weeklyForecast");
-container.innerHTML = "";
+const linhas = document.querySelectorAll(".previsao-linha");
 
-Object.keys(dias).slice(0,6).forEach((dia,index)=>{
+Object.keys(dias).slice(0,6).forEach((dia,i)=>{
 
-    const temps = dias[dia].temps;
+const lista = dias[dia];
 
-    const max = Math.round(Math.max(...temps));
-    const min = Math.round(Math.min(...temps));
+let tempMax = -100;
+let tempMin = 100;
+let pop = 0;
 
-    const codigos = dias[dia].weather;
+lista.forEach(h =>{
 
-    let iconeDia="🌤";
-    let iconeNoite="🌙";
+if(h.main.temp_max > tempMax) tempMax = h.main.temp_max;
+if(h.main.temp_min < tempMin) tempMin = h.main.temp_min;
 
-    // PRIORIDADE DE CLIMA
-    if(codigos.some(c=>c>=200 && c<300)){
-        iconeDia="⛈️";
-        iconeNoite="⛈️";
-    }
-    else if(codigos.some(c=>c>=500 && c<600)){
-        iconeDia="🌧";
-        iconeNoite="🌧";
-    }
-    else if(codigos.some(c=>c>=801 && c<=804)){
-        iconeDia="☁️";
-        iconeNoite="☁️";
-    }
+pop = Math.max(pop, h.pop);
 
-    const dataObj = new Date(dia);
+});
 
-    let nomeDia = dataObj.toLocaleDateString("pt-PT",{weekday:"long"});
+const chanceChuva = Math.round(pop * 100);
 
-    if(index===0) nomeDia="Hoje";
+const dataObj = new Date(dia);
+const diasSemana = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
 
-    container.innerHTML+=`
+const nomeDia = i === 0 ? "Hoje" : diasSemana[dataObj.getDay()];
 
-    <div class="linha-dia">
+linhas[i].querySelector(".dia").innerText = nomeDia;
+linhas[i].querySelector(".temp").innerText =
+`${Math.round(tempMax)}° / ${Math.round(tempMin)}°`;
 
-        <div class="nome-dia">${nomeDia}</div>
-
-        <div class="icones">
-        ${iconeDia} ${iconeNoite}
-        </div>
-
-        <div class="temperatura">
-        ${max}° / ${min}°
-        </div>
-
-    </div>
-
-    `;
+linhas[i].querySelector(".chuva").innerText =
+`🌧 ${chanceChuva}%`;
 
 });
 
