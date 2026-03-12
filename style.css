@@ -312,7 +312,15 @@ color:#aaa;
 margin-top:4px;
 }
 
-.sol-info i{
-margin-right:6px;
+.sol-info{
+display:flex;
+gap:30px;
 font-size:18px;
+align-items:center;
+}
+
+.sol-info i{
+font-size:24px;
+color:#FFD43B;
+margin-right:6px;
 }
