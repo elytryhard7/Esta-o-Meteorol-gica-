@@ -221,30 +221,41 @@ margin-top:20px;
 
 }
 
-#previsaoSemanal{
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
+.previsao-container{
+margin-top:10px;
 }
 
-.dia-previsao{
-
+.previsao-linha{
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
+padding:10px 0;
+border-bottom:1px solid #333;
+}
 
-padding:10px;
+.dia{
+width:90px;
+font-weight:bold;
+color:white;
+}
 
-background:#1a1a1a;
+.icone{
+font-size:20px;
+width:70px;
+text-align:center;
+}
 
-border-radius:15px;
+.temp{
+font-weight:bold;
+width:80px;
+text-align:right;
+}
 
+.chuva{
+width:70px;
+text-align:right;
+color:#4fc3ff;
+font-weight:bold;
 }
 
 .dia-previsao span{
