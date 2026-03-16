@@ -55,14 +55,6 @@ border-bottom:1px solid #333;
 
 }
 
-#map{
-
-height:400px;
-
-border-radius:20px;
-
-}
-
 canvas{
 
 margin-top:20px;
@@ -336,4 +328,27 @@ align-items:center;
 font-size:24px;
 color:#FFD43B;
 margin-right:6px;
+}
+
+
+#map{
+height:420px;
+border-radius:20px;
+}
+
+.timeline{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+}
+
+.timeline input{
+flex:1;
+}
+
+.legenda{
+margin-top:10px;
+font-size:14px;
+opacity:0.8;
 }
