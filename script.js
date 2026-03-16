@@ -235,29 +235,34 @@ new Date(d.results.sunset).toLocaleTimeString();
 
 // ===== MAPA OPENWEATHER =====
 
-const map = L.map('map').setView([-9.54, 16.34], 7);
+const map = L.map("map").setView([-9.54,16.34],7);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-attribution:'© OpenStreetMap'
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+attribution:"© OpenStreetMap"
 }).addTo(map);
 
+let frames=[];
 let radarLayer;
+let frameIndex=0;
+let animation;
 
 fetch("https://api.rainviewer.com/public/weather-maps.json")
 .then(res=>res.json())
 .then(data=>{
 
-const radar=data.radar.past;
+frames=data.radar.past;
 
-let index=radar.length-1;
+startAnimation();
 
-function mostrarRadar(i){
+});
+
+function showFrame(i){
 
 if(radarLayer){
 map.removeLayer(radarLayer);
 }
 
-const frame=radar[i];
+const frame=frames[i];
 
 radarLayer=L.tileLayer(
 `https://tilecache.rainviewer.com${frame.path}/256/{z}/{x}/{y}/2/1_1.png`,
@@ -271,50 +276,21 @@ new Date(frame.time*1000).toLocaleTimeString();
 
 }
 
-mostrarRadar(index);
+function startAnimation(){
 
-const slider=document.getElementById("radarSlider");
+animation=setInterval(()=>{
 
-slider.max=radar.length-1;
+showFrame(frameIndex);
 
-slider.addEventListener("input",()=>{
-mostrarRadar(slider.value);
-});
+frameIndex++;
 
-let animar=false;
-
-document.getElementById("playRadar").onclick=()=>{
-
-animar=!animar;
-
-if(animar){
-
-let i=0;
-
-const loop=setInterval(()=>{
-
-if(!animar){
-clearInterval(loop);
-return;
+if(frameIndex>=frames.length){
+frameIndex=0;
 }
 
-mostrarRadar(i);
-
-slider.value=i;
-
-i++;
-
-if(i>=radar.length){
-i=0;
-}
-
-},700);
+},800);
 
 }
-
-};
-
-});
 
 // ===== ATUALIZAÇÃO 4H =====
 
