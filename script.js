@@ -318,9 +318,10 @@ dias[dataDia].push(item);
 
 });
 
-const linhas=document.querySelectorAll(".dia-previsao");
+const container=document.getElementById("previsaoSemanal");
+container.innerHTML="";
 
-Object.keys(dias).slice(0,6).forEach((dia,i)=>{
+Object.keys(dias).slice(0,6).forEach(dia=>{
 
 const lista=dias[dia];
 
@@ -345,8 +346,8 @@ if(h.pop>pop) pop=h.pop;
 const clima=h.weather[0].main;
 
 if(clima==="Thunderstorm") temTempestade=true;
-else if(clima==="Rain") temChuva=true;
-else if(clima==="Clouds") temNuvem=true;
+if(clima==="Rain") temChuva=true;
+if(clima==="Clouds") temNuvem=true;
 
 const hora=h.dt_txt.split(" ")[1];
 
@@ -360,15 +361,18 @@ iconeNoite=getIcon(clima,false);
 
 });
 
+const dataObj=new Date(dia);
+
 let iconeDominante="wi-day-sunny";
 
 if(temTempestade) iconeDominante="wi-thunderstorm";
 else if(temChuva) iconeDominante="wi-rain";
 else if(temNuvem) iconeDominante="wi-cloudy";
 
-const dataObj=new Date(dia);
+container.innerHTML+=`
 
-linhas[i].innerHTML=`
+<div class="linha-previsao">
+
 <span class="dia">${diasSemana[dataObj.getDay()]}</span>
 
 <span class="icone">
@@ -377,14 +381,15 @@ linhas[i].innerHTML=`
 </span>
 
 <span class="temperatura">
-<span class="max">${Math.round(max)}°</span>
-<span class="min">${Math.round(min)}°</span>
+${Math.round(max)}° / ${Math.round(min)}°
 </span>
 
 <span class="chuva">
-<i class="wi wi-raindrop"></i>
-${Math.round(pop*100)}%
+<i class="wi wi-raindrop"></i> ${Math.round(pop*100)}%
 </span>
+
+</div>
+
 `;
 
 });
