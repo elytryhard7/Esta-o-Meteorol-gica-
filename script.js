@@ -303,71 +303,100 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&ap
 .then(res => res.json())
 .then(data => {
 
-const diasSemana = ["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
-const dias = {};
+const diasSemana=["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
+const dias={};
 
-data.list.forEach(item => {
+data.list.forEach(item=>{
 
-const dataDia = item.dt_txt.split(" ")[0];
+const dataDia=item.dt_txt.split(" ")[0];
 
 if(!dias[dataDia]){
-dias[dataDia] = [];
+dias[dataDia]=[];
 }
 
 dias[dataDia].push(item);
 
 });
 
-const linhas = document.querySelectorAll(".dia-previsao");
+const linhas=document.querySelectorAll(".dia-previsao");
 
 Object.keys(dias).slice(0,6).forEach((dia,i)=>{
 
-const lista = dias[dia];
+const lista=dias[dia];
 
-let max = -100;
-let min = 100;
-let pop = 0;
-let clima = "";
+let max=-100;
+let min=100;
+let pop=0;
 
-lista.forEach(h => {
+let temTempestade=false;
+let temChuva=false;
+let temNuvem=false;
 
-if(h.main.temp_max > max) max = h.main.temp_max;
-if(h.main.temp_min < min) min = h.main.temp_min;
+let iconeDia="wi-day-sunny";
+let iconeNoite="wi-night-clear";
 
-if(h.pop > pop) pop = h.pop;
+lista.forEach(h=>{
 
-clima = h.weather[0].main;
+if(h.main.temp_max>max) max=h.main.temp_max;
+if(h.main.temp_min<min) min=h.main.temp_min;
+
+if(h.pop>pop) pop=h.pop;
+
+const clima=h.weather[0].main;
+
+if(clima==="Thunderstorm") temTempestade=true;
+else if(clima==="Rain") temChuva=true;
+else if(clima==="Clouds") temNuvem=true;
+
+const hora=h.dt_txt.split(" ")[1];
+
+if(hora==="15:00:00"){
+iconeDia=getIcon(clima,true);
+}
+
+if(hora==="20:00:00"){
+iconeNoite=getIcon(clima,false);
+}
 
 });
 
-const dataObj = new Date(dia);
+let iconeDominante="wi-day-sunny";
 
-linhas[i].innerHTML = `
+if(temTempestade) iconeDominante="wi-thunderstorm";
+else if(temChuva) iconeDominante="wi-rain";
+else if(temNuvem) iconeDominante="wi-cloudy";
+
+const dataObj=new Date(dia);
+
+linhas[i].innerHTML=`
 <span class="dia">${diasSemana[dataObj.getDay()]}</span>
-<i class="icone wi ${getIcon(clima)}"></i>
+
+<span class="icone">
+<i class="wi ${iconeDia}"></i>
+<i class="wi ${iconeNoite}"></i>
+</span>
+
 <span class="temperatura">
 <span class="max">${Math.round(max)}°</span>
 <span class="min">${Math.round(min)}°</span>
 </span>
+
 <span class="chuva">
 <i class="wi wi-raindrop"></i>
-<span class="chance">${Math.round(pop*100)}%</span>
+${Math.round(pop*100)}%
 </span>
 `;
 
 });
 
-});
+function getIcon(clima,dia){
 
-
-function getIcon(clima){
-
-if(clima==="Rain") return "wi-rain";
-if(clima==="Clouds") return "wi-cloudy";
-if(clima==="Clear") return "wi-day-sunny";
 if(clima==="Thunderstorm") return "wi-thunderstorm";
+if(clima==="Rain") return "wi-rain";
+if(clima==="Clouds") return dia?"wi-day-cloudy":"wi-night-alt-cloudy";
+if(clima==="Clear") return dia?"wi-day-sunny":"wi-night-clear";
 
-return "wi-day-cloudy";
+return "wi-cloud";
 
 }
 
