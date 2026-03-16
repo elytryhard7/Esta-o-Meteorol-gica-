@@ -354,7 +354,7 @@ if(hora==="15:00:00"){
 iconeDia=getIcon(clima,true);
 }
 
-if(hora==="20:00:00"){
+if(hora==="21:00:00"){
 iconeNoite=getIcon(clima,false);
 }
 
