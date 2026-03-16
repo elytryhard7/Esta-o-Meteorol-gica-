@@ -235,28 +235,86 @@ new Date(d.results.sunset).toLocaleTimeString();
 
 // ===== MAPA OPENWEATHER =====
 
-const map=L.map('map').setView([lat,lon],8);
+const map = L.map('map').setView([-9.54, 16.34], 7);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
- attribution: '&copy; OpenStreetMap & Carto',
- subdomains: 'abcd',
- maxZoom: 19
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+attribution:'© OpenStreetMap'
 }).addTo(map);
 
-L.tileLayer(
-`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
-{
-opacity:0.75
-}
-).addTo(map);
+let radarLayer;
 
-L.tileLayer(
-`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${openWeatherKey}`,
-{
-opacity:0.85
-}
-).addTo(map);
+fetch("https://api.rainviewer.com/public/weather-maps.json")
+.then(res=>res.json())
+.then(data=>{
 
+const radar=data.radar.past;
+
+let index=radar.length-1;
+
+function mostrarRadar(i){
+
+if(radarLayer){
+map.removeLayer(radarLayer);
+}
+
+const frame=radar[i];
+
+radarLayer=L.tileLayer(
+`https://tilecache.rainviewer.com${frame.path}/256/{z}/{x}/{y}/2/1_1.png`,
+{opacity:0.7}
+);
+
+radarLayer.addTo(map);
+
+document.getElementById("tempoRadar").innerText=
+new Date(frame.time*1000).toLocaleTimeString();
+
+}
+
+mostrarRadar(index);
+
+const slider=document.getElementById("radarSlider");
+
+slider.max=radar.length-1;
+
+slider.addEventListener("input",()=>{
+mostrarRadar(slider.value);
+});
+
+let animar=false;
+
+document.getElementById("playRadar").onclick=()=>{
+
+animar=!animar;
+
+if(animar){
+
+let i=0;
+
+const loop=setInterval(()=>{
+
+if(!animar){
+clearInterval(loop);
+return;
+}
+
+mostrarRadar(i);
+
+slider.value=i;
+
+i++;
+
+if(i>=radar.length){
+i=0;
+}
+
+},700);
+
+}
+
+};
+
+});
 
 // ===== ATUALIZAÇÃO 4H =====
 
