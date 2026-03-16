@@ -221,46 +221,49 @@ margin-top:20px;
 
 }
 
-.previsao-container{
+.previsao-semanal{
 margin-top:10px;
 }
 
-.previsao-linha{
+.dia-previsao{
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:10px 0;
+justify-content:space-between;
+padding:14px 0;
 border-bottom:1px solid #333;
 }
 
 .dia{
 width:90px;
 font-weight:bold;
-color:white;
+letter-spacing:1px;
 }
 
 .icone{
-font-size:20px;
-width:70px;
+font-size:28px;
+color:#8ecfff;
+width:40px;
 text-align:center;
 }
 
-.temp{
+.temperatura{
+display:flex;
+gap:8px;
+font-size:22px;
 font-weight:bold;
-width:80px;
-text-align:right;
+}
+
+.min{
+opacity:0.6;
+font-weight:normal;
 }
 
 .chuva{
-width:70px;
-text-align:right;
-color:#4fc3ff;
+display:flex;
+align-items:center;
+gap:5px;
+color:#8ecfff;
 font-weight:bold;
-}
-
-.dia-previsao span{
-
-font-size:18px;
 
 }
 
