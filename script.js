@@ -304,7 +304,7 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&ap
 .then(data => {
 
 const dias = {};
-data.list.forEach(item => {
+data.list.forEach(item=>{
 
 const dataDia = item.dt_txt.split(" ")[0];
 
@@ -316,40 +316,52 @@ dias[dataDia].push(item);
 
 });
 
-const linhas = document.querySelectorAll(".previsao-linha");
+const linhas = document.querySelectorAll(".dia-previsao");
 
 Object.keys(dias).slice(0,6).forEach((dia,i)=>{
 
 const lista = dias[dia];
 
-let tempMax = -100;
-let tempMin = 100;
-let pop = 0;
+let max=-100;
+let min=100;
+let pop=0;
+let clima="";
 
-lista.forEach(h =>{
+lista.forEach(h=>{
 
-if(h.main.temp_max > tempMax) tempMax = h.main.temp_max;
-if(h.main.temp_min < tempMin) tempMin = h.main.temp_min;
+if(h.main.temp_max>max) max=h.main.temp_max;
+if(h.main.temp_min<min) min=h.main.temp_min;
 
-pop = Math.max(pop, h.pop);
+pop=Math.max(pop,h.pop);
 
-});
-
-const chanceChuva = Math.round(pop * 100);
-
-const dataObj = new Date(dia);
-const diasSemana = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
-
-const nomeDia = i === 0 ? "Hoje" : diasSemana[dataObj.getDay()];
-
-linhas[i].querySelector(".dia").innerText = nomeDia;
-linhas[i].querySelector(".temp").innerText =
-`${Math.round(tempMax)}° / ${Math.round(tempMin)}°`;
-
-linhas[i].querySelector(".chuva").innerText =
-`🌧 ${chanceChuva}%`;
+clima=h.weather[0].main;
 
 });
+
+const diasSemana=["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
+const dataObj=new Date(dia);
+
+linhas[i].querySelector(".dia").innerText =
+diasSemana[dataObj.getDay()];
+
+linhas[i].querySelector(".max").innerText =
+Math.round(max)+"°";
+
+linhas[i].querySelector(".min").innerText =
+Math.round(min)+"°";
+
+linhas[i].querySelector(".chance").innerText =
+Math.round(pop*100)+"%";
+
+let icone="wi-day-cloudy";
+
+if(clima=="Rain") icone="wi-rain";
+if(clima=="Clouds") icone="wi-cloudy";
+if(clima=="Clear") icone="wi-day-sunny";
+if(clima=="Thunderstorm") icone="wi-thunderstorm";
+
+linhas[i].querySelector(".icone").className =
+"icone wi "+icone;
 
 });
 
