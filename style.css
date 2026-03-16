@@ -266,6 +266,13 @@ color:#8ecfff;
 font-weight:bold;
 }
 
+.icone{
+display:flex;
+gap:8px;
+font-size:24px;
+color:#8ecfff;
+}
+
 /* ===== DICA DO DIA ===== */
 
 #dicaTitulo{
