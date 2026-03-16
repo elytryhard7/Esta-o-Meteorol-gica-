@@ -303,105 +303,71 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&ap
 .then(res => res.json())
 .then(data => {
 
-const diasSemana=["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
-const dias={};
+const diasSemana = ["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
+const dias = {};
 
-data.list.forEach(item=>{
+data.list.forEach(item => {
 
-const dataDia=item.dt_txt.split(" ")[0];
+const dataDia = item.dt_txt.split(" ")[0];
 
 if(!dias[dataDia]){
-dias[dataDia]=[];
+dias[dataDia] = [];
 }
 
 dias[dataDia].push(item);
 
 });
 
-const container=document.getElementById("previsaoSemanal");
-container.innerHTML="";
+const linhas = document.querySelectorAll(".dia-previsao");
 
-Object.keys(dias).slice(0,6).forEach(dia=>{
+Object.keys(dias).slice(0,6).forEach((dia,i)=>{
 
-const lista=dias[dia];
+const lista = dias[dia];
 
-let max=-100;
-let min=100;
-let pop=0;
+let max = -100;
+let min = 100;
+let pop = 0;
+let clima = "";
 
-let temTempestade=false;
-let temChuva=false;
-let temNuvem=false;
+lista.forEach(h => {
 
-let iconeDia="wi-day-sunny";
-let iconeNoite="wi-night-clear";
+if(h.main.temp_max > max) max = h.main.temp_max;
+if(h.main.temp_min < min) min = h.main.temp_min;
 
-lista.forEach(h=>{
+if(h.pop > pop) pop = h.pop;
 
-if(h.main.temp_max>max) max=h.main.temp_max;
-if(h.main.temp_min<min) min=h.main.temp_min;
-
-if(h.pop>pop) pop=h.pop;
-
-const clima=h.weather[0].main;
-
-if(clima==="Thunderstorm") temTempestade=true;
-if(clima==="Rain") temChuva=true;
-if(clima==="Clouds") temNuvem=true;
-
-const hora=h.dt_txt.split(" ")[1];
-
-if(hora==="15:00:00"){
-iconeDia=getIcon(clima,true);
-}
-
-if(hora==="21:00:00"){
-iconeNoite=getIcon(clima,false);
-}
+clima = h.weather[0].main;
 
 });
 
-const dataObj=new Date(dia);
+const dataObj = new Date(dia);
 
-let iconeDominante="wi-day-sunny";
-
-if(temTempestade) iconeDominante="wi-thunderstorm";
-else if(temChuva) iconeDominante="wi-rain";
-else if(temNuvem) iconeDominante="wi-cloudy";
-
-container.innerHTML+=`
-
-<div class="linha-previsao">
-
+linhas[i].innerHTML = `
 <span class="dia">${diasSemana[dataObj.getDay()]}</span>
-
-<span class="icone">
-<i class="wi ${iconeDia}"></i>
-<i class="wi ${iconeNoite}"></i>
-</span>
-
+<i class="icone wi ${getIcon(clima)}"></i>
 <span class="temperatura">
-${Math.round(max)}° / ${Math.round(min)}°
+<span class="max">${Math.round(max)}°</span>
+<span class="min">${Math.round(min)}°</span>
 </span>
-
 <span class="chuva">
-<i class="wi wi-raindrop"></i> ${Math.round(pop*100)}%
+<i class="wi wi-raindrop"></i>
+<span class="chance">${Math.round(pop*100)}%</span>
 </span>
-
-</div>
-
 `;
 
 });
 
-function getIcon(clima,dia){
+});
 
-if(clima==="Thunderstorm") return "wi-thunderstorm";
+
+function getIcon(clima){
+
 if(clima==="Rain") return "wi-rain";
-if(clima==="Clouds") return dia?"wi-day-cloudy":"wi-night-alt-cloudy";
-if(clima==="Clear") return dia?"wi-day-sunny":"wi-night-clear";
+if(clima==="Clouds") return "wi-cloudy";
+if(clima==="Clear") return "wi-day-sunny";
+if(clima==="Thunderstorm") return "wi-thunderstorm";
 
-return "wi-cloud";
+return "wi-day-cloudy";
 
 }
 
