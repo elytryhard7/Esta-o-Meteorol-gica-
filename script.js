@@ -303,8 +303,10 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&ap
 .then(res => res.json())
 .then(data => {
 
+const diasSemana = ["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
 const dias = {};
-data.list.forEach(item=>{
+
+data.list.forEach(item => {
 
 const dataDia = item.dt_txt.split(" ")[0];
 
@@ -322,48 +324,52 @@ Object.keys(dias).slice(0,6).forEach((dia,i)=>{
 
 const lista = dias[dia];
 
-let max=-100;
-let min=100;
-let pop=0;
-let clima="";
+let max = -100;
+let min = 100;
+let pop = 0;
+let clima = "";
 
-lista.forEach(h=>{
+lista.forEach(h => {
 
-if(h.main.temp_max>max) max=h.main.temp_max;
-if(h.main.temp_min<min) min=h.main.temp_min;
+if(h.main.temp_max > max) max = h.main.temp_max;
+if(h.main.temp_min < min) min = h.main.temp_min;
 
-pop=Math.max(pop,h.pop);
+if(h.pop > pop) pop = h.pop;
 
-clima=h.weather[0].main;
+clima = h.weather[0].main;
+
+});
+
+const dataObj = new Date(dia);
+
+linhas[i].innerHTML = `
+<span class="dia">${diasSemana[dataObj.getDay()]}</span>
+<i class="icone wi ${getIcon(clima)}"></i>
+<span class="temperatura">
+<span class="max">${Math.round(max)}°</span>
+<span class="min">${Math.round(min)}°</span>
+</span>
+<span class="chuva">
+<i class="wi wi-raindrop"></i>
+<span class="chance">${Math.round(pop*100)}%</span>
+</span>
+`;
 
 });
 
-const diasSemana=["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
-const dataObj=new Date(dia);
-
-linhas[i].querySelector(".dia").innerText =
-diasSemana[dataObj.getDay()];
-
-linhas[i].querySelector(".max").innerText =
-Math.round(max)+"°";
-
-linhas[i].querySelector(".min").innerText =
-Math.round(min)+"°";
-
-linhas[i].querySelector(".chance").innerText =
-Math.round(pop*100)+"%";
-
-let icone="wi-day-cloudy";
-
-if(clima=="Rain") icone="wi-rain";
-if(clima=="Clouds") icone="wi-cloudy";
-if(clima=="Clear") icone="wi-day-sunny";
-if(clima=="Thunderstorm") icone="wi-thunderstorm";
-
-linhas[i].querySelector(".icone").className =
-"icone wi "+icone;
-
 });
+
+
+function getIcon(clima){
+
+if(clima==="Rain") return "wi-rain";
+if(clima==="Clouds") return "wi-cloudy";
+if(clima==="Clear") return "wi-day-sunny";
+if(clima==="Thunderstorm") return "wi-thunderstorm";
+
+return "wi-day-cloudy";
+
+}
 
 function carregarDica(){
 
