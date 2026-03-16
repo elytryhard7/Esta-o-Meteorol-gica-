@@ -266,13 +266,6 @@ color:#8ecfff;
 font-weight:bold;
 }
 
-.icone{
-display:flex;
-gap:8px;
-font-size:24px;
-color:#8ecfff;
-}
-
 /* ===== DICA DO DIA ===== */
 
 #dicaTitulo{
@@ -343,4 +336,11 @@ align-items:center;
 font-size:24px;
 color:#FFD43B;
 margin-right:6px;
+}
+
+.icone{
+display:flex;
+gap:8px;
+font-size:24px;
+color:#8ecfff;
 }
