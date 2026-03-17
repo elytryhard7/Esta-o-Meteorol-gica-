@@ -97,50 +97,75 @@ document.getElementById("sensacao").innerText=
 
 // ===== CLASSIFICAÇÃO =====
 
-function calcularClima(temp,hum,press,chuva){
+function calcularClima(temp, hum, press, chuva) {
 
-let estado="☀️ Ensolarado";
+    let hora = new Date().getHours();
+    let isNoite = (hora >= 19 || hora <= 5);
 
-if(chuva>10){
+    let estado = "<i class='wi wi-day-sunny'></i> Ensolarado";
 
-estado="🌧️ Chuva Forte";
+    // 🔥 Calor e frio (com restrições)
+    if (!isNoite && temp >= 38) {
+        estado = "<i class='wi wi-hot'></i> Calor Intenso";
+    } 
+    else if (!isNoite && temp <= 5) {
+        estado = "<i class='wi wi-snowflake-cold'></i> Frio Intenso";
+    } 
 
-}
+    // 🌙 NOITE
+    else if (isNoite) {
 
-else if(chuva>2){
+        if (chuva > 10) {
+            estado = "<i class='wi wi-night-alt-rain'></i> Chuva Forte";
+        } 
+        else if (chuva > 2) {
+            estado = "<i class='wi wi-night-alt-showers'></i> Chuva Leve";
+        } 
+        else if (hum > 85 && press < 1005) {
+            estado = "<i class='wi wi-night-alt-thunderstorm'></i> Possível Chuva";
+        } 
+        else if (hum > 80) {
+            estado = "<i class='wi wi-night-alt-cloudy'></i> Muito Nublado";
+        } 
+        else if (hum > 60) {
+            estado = "<i class='wi wi-night-alt-cloudy'></i> Noite Parcialmente Nublada";
+        } 
+        else {
+            estado = "<i class='wi wi-night-clear'></i> Noite Limpa";
+        }
 
-estado="🌦️ Chuva Leve";
+    }
 
-}
+    // ☀️ DIA
+    else {
 
-else if(hum>85 && press<1005){
+        if (chuva > 10) {
+            estado = "<i class='wi wi-day-rain'></i> Chuva Forte";
+        } 
+        else if (chuva > 2) {
+            estado = "<i class='wi wi-day-showers'></i> Chuva Leve";
+        } 
+        else if (hum > 85 && press < 1005) {
+            estado = "<i class='wi wi-day-thunderstorm'></i> Possível Chuva";
+        } 
+        else if (hum > 80) {
+            estado = "<i class='wi wi-cloudy'></i> Muito Nublado";
+        } 
+        else if (hum > 60) {
+            estado = "<i class='wi wi-day-cloudy'></i> Parcialmente Nublado";
+        } 
+        else if (hum > 40) {
+            estado = "<i class='wi wi-cloud'></i> Nublado";
+        } 
+        else {
+            estado = "<i class='wi wi-day-sunny'></i> Ensolarado";
+        }
 
-estado="⛈️ Possível Chuva";
+    }
 
-}
+    document.getElementById("estadoTempo").innerHTML = estado;
 
-else if(hum>80){
-
-estado="☁️ Muito Nublado";
-
-}
-
-else if(hum>60){
-
-estado="⛅ Parcialmente Nublado";
-
-}
-
-else if(hum>40){
-
-estado="☁️ Nublado";
-
-}
-
-document.getElementById("estadoTempo").innerText=estado;
-
-calcularDificuldade(temp,chuva,hum);
-
+    calcularDificuldade(temp, chuva, hum);
 }
 
 // ===== DIFICULDADE =====
