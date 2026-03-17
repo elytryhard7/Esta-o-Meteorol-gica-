@@ -149,6 +149,22 @@ margin-top:20px;
 
 }
 
+/* ================= CRÉDITOS ================= */
+
+.credits{
+
+    margin-top:60px;
+
+    padding:40px 20px;
+
+    background:#111;
+
+    color:white;
+
+    text-align:center;
+
+}
+
 .previsao-semanal{
 margin-top:10px;
 }
