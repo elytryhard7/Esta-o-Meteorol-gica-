@@ -352,3 +352,82 @@ margin-top:10px;
 font-size:14px;
 opacity:0.8;
 }
+
+/* ===== ANIMACAO ICON ===== /*
+
+/* 🌞 Sol a girar */
+.wi-day-sunny {
+  animation: girar 8s linear infinite;
+}
+
+/* ☁️ Nuvens a mover */
+.wi-cloud, .wi-cloudy, .wi-day-cloudy, .wi-night-alt-cloudy {
+  animation: moverNuvem 6s ease-in-out infinite alternate;
+}
+
+/* 🌧️ Chuva a cair */
+.wi-rain, .wi-day-rain, .wi-night-alt-rain, .wi-day-showers, .wi-night-alt-showers {
+  animation: chuva 1s linear infinite;
+}
+
+/* ⛈️ Trovoada (piscar) */
+.wi-thunderstorm, .wi-day-thunderstorm, .wi-night-alt-thunderstorm {
+  animation: flash 1.5s infinite;
+}
+
+/* 🌙 Lua leve movimento */
+.wi-night-clear {
+  animation: lua 5s ease-in-out infinite alternate;
+}
+
+/* 🔥 Calor (vibração leve) */
+.wi-hot {
+  animation: calor 0.8s infinite alternate;
+}
+
+/* 🥶 Frio (tremor) */
+.wi-snowflake-cold {
+  animation: frio 1s infinite alternate;
+}
+
+/* ================= ANIMAÇÕES ================= */
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moverNuvem {
+  from { transform: translateX(-5px); }
+  to { transform: translateX(5px); }
+}
+
+@keyframes chuva {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(5px); opacity: 0.7; }
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes lua {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-3px); }
+}
+
+@keyframes calor {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+@keyframes frio {
+  from { transform: translateX(-1px); }
+  to { transform: translateX(1px); }
+}
+
+#estadoTempo i {
+  font-size: 40px;
+  margin-right: 8px;
+}
