@@ -53,6 +53,8 @@ const chuva = parseFloat(ultimo.field4);
 
 const vento = parseFloat(ultimo.field5);
 
+const Luz = ParseFloat(último.field6);
+
 document.getElementById("temperatura").innerText = temp+"°C";
 
 document.getElementById("humidade").innerText = hum+"%";
@@ -62,6 +64,8 @@ document.getElementById("pressao").innerText = press+" hPa";
 document.getElementById("chuva").innerText = chuva+" mm";
 
 document.getElementById("vento").innerText = vento+" km/h";
+
+document.getElementById("LDR").innerText = Luz+";
 
 calcularSensacao(temp,hum,vento);
 
