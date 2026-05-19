@@ -25,9 +25,9 @@ const lat = -9.2555;
 
 const lon = 16.3315;
 
-const channelID = "SEU_CHANNEL_ID";
+const channelID = "3388366";
 
-const readAPI = "SUA_READ_API_KEY";
+const readAPI = "YT2QKTV2Y0DQ0VSU";
 
 const openWeatherKey = "241fc91487eab06c609738e55f29afa4";
 
