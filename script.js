@@ -1,4 +1,4 @@
-// ===== HORA EM TEMPO REAL =====
+5// ===== HORA EM TEMPO REAL =====
 
 setInterval(()=>{
 
@@ -430,57 +430,6 @@ return "wi-day-cloudy";
 
 }
 
-function carregarDica(){
-
-fetch("dicas.json")
-
-.then(res=>res.json())
-
-.then(lista=>{
-
-const hoje = new Date().toDateString();
-
-const estadoAtual =
-
-document.getElementById("estadoTempo").innerText;
-
-if(localStorage.getItem("dataDica") !== hoje){
-
-let filtradas = lista.filter(d =>
-
-d.condicao === estadoAtual
-
-);
-
-if(filtradas.length === 0){
-
-filtradas = lista;
-
-}
-
-const sorteio =
-
-filtradas[Math.floor(Math.random()*filtradas.length)];
-
-localStorage.setItem("dicaHoje", JSON.stringify(sorteio));
-
-localStorage.setItem("dataDica", hoje);
-
-}
-
-const dica = JSON.parse(localStorage.getItem("dicaHoje"));
-
-document.getElementById("dicaTitulo").innerText = dica.titulo;
-
-document.getElementById("dicaTexto").innerText = dica.texto;
-
-});
-
-}
-
-// chamar depois de calcular clima
-
-setTimeout(carregarDica,2000);
 
 L.control.layers({
 "Mapa": base
